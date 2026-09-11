@@ -158,5 +158,5 @@ Distribuído sob a licença **MIT**. Veja `LICENSE`.
 ---
 
 <p align="center">
-  <sub>Projeto acadêmico · Programação Orientada a Objetos · UNIFAL-MG · por <a href="https://github.com/gabriel-bcc">Gabriel Henrique</a></sub>
+  <sub>Projeto acadêmico · Programação Orientada a Objetos · UNIFAL-MG · por <a href="https://github.com/gabrielhsp-sys">Gabriel Henrique</a></sub>
 </p>
