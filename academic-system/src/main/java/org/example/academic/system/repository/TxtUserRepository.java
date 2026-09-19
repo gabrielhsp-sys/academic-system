@@ -34,8 +34,10 @@ public class TxtUserRepository implements UserRepository {
             try (BufferedReader reader = new BufferedReader(
                     new InputStreamReader(stream, StandardCharsets.UTF_8))) {
                 String line;
+                int lineNumber = 0;
                 while ((line = reader.readLine()) != null) {
-                    parseLine(line);
+                    lineNumber++;
+                    parseLine(line, lineNumber);
                 }
             }
         } catch (IOException e) {
@@ -46,23 +48,47 @@ public class TxtUserRepository implements UserRepository {
     /** Carrega os usuarios de um arquivo externo (util para testes). */
     public TxtUserRepository(Path file) {
         try {
-            for (String line : Files.readAllLines(file, StandardCharsets.UTF_8)) {
-                parseLine(line);
+            List<String> lines = Files.readAllLines(file, StandardCharsets.UTF_8);
+            for (int i = 0; i < lines.size(); i++) {
+                parseLine(lines.get(i), i + 1);
             }
         } catch (IOException e) {
             throw new PersistenceOperationException("Falha ao carregar o arquivo de usuarios: " + file, e);
         }
     }
 
-    private void parseLine(String line) {
+    private void parseLine(String line, int lineNumber) {
         String trimmed = line.trim();
         if (trimmed.isEmpty() || trimmed.startsWith("#")) {
             return;
         }
-        String[] parts = trimmed.split(";");
-        if (parts.length == 3) {
-            users.add(new User(parts[0].trim(), parts[1].trim(),
-                    Role.valueOf(parts[2].trim().toUpperCase())));
+
+        String[] parts = trimmed.split(";", -1);
+        if (parts.length != 3) {
+            throw new PersistenceOperationException(
+                    "Linha de usuario invalida (" + lineNumber
+                            + "): esperado formato username;senha;PAPEL",
+                    null);
+        }
+
+        String username = parts[0].trim();
+        String password = parts[1].trim();
+        String roleText = parts[2].trim();
+
+        if (username.isEmpty() || password.isEmpty() || roleText.isEmpty()) {
+            throw new PersistenceOperationException(
+                    "Linha de usuario invalida (" + lineNumber
+                            + "): username, senha e papel sao obrigatorios",
+                    null);
+        }
+
+        try {
+            Role role = Role.valueOf(roleText.toUpperCase());
+            users.add(new User(username, password, role));
+        } catch (IllegalArgumentException e) {
+            throw new PersistenceOperationException(
+                    "Papel de usuario invalido na linha " + lineNumber + ": " + roleText,
+                    e);
         }
     }
 
