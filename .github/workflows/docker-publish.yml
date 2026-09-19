@@ -41,7 +41,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v6
         with:
-          images: ghcr.io/${{ github.repository_owner }}/academic-system
+          images: ghcr.io/${{ github.repository_owner }}/academic-system-2026
           tags: |
             type=sha
             type=ref,event=tag
