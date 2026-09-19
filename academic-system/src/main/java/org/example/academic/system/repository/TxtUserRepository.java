@@ -37,7 +37,13 @@ public class TxtUserRepository implements UserRepository {
                 int lineNumber = 0;
                 while ((line = reader.readLine()) != null) {
                     lineNumber++;
-                    parseLine(line, lineNumber);
+                    try {
+                        parseLine(line, lineNumber);
+                    } catch (PersistenceOperationException e) {
+                        throw new PersistenceOperationException(
+                                "Falha ao carregar o recurso /users.txt. " + e.getMessage(),
+                                e);
+                    }
                 }
             }
         } catch (IOException e) {
