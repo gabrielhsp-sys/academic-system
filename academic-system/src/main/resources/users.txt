@@ -1,0 +1,4 @@
+# Usuarios do sistema academico (US-2366)
+# Formato: username;senha;PAPEL
+admin;admin123;ADMIN
+professor;prof123;PROFESSOR
