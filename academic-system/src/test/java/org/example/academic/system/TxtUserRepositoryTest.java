@@ -23,12 +23,12 @@ class TxtUserRepositoryTest {
     @Test
     void validUtf8UserFileIsLoaded() throws IOException {
         Path file = tempDir.resolve("users.txt");
-        Files.writeString(file, "professor;senha123;PROFESSOR\n", StandardCharsets.UTF_8);
+        Files.writeString(file, "professór;senhã123;PROFESSOR\n", StandardCharsets.UTF_8);
 
         TxtUserRepository repository = new TxtUserRepository(file);
 
-        assertTrue(repository.findByUsername("professor").isPresent());
-        assertEquals(Role.PROFESSOR, repository.findByUsername("professor").orElseThrow().getRole());
+        assertTrue(repository.findByUsername("professór").isPresent());
+        assertEquals(Role.PROFESSOR, repository.findByUsername("professór").orElseThrow().getRole());
     }
 
     @Test
@@ -40,6 +40,7 @@ class TxtUserRepositoryTest {
                 PersistenceOperationException.class,
                 () -> new TxtUserRepository(file));
 
+        assertTrue(error.getMessage().contains(file.toString()));
         assertTrue(error.getMessage().contains("linha 1"));
     }
 
@@ -52,6 +53,7 @@ class TxtUserRepositoryTest {
                 PersistenceOperationException.class,
                 () -> new TxtUserRepository(file));
 
+        assertTrue(error.getMessage().contains(file.toString()));
         assertTrue(error.getMessage().contains("Linha de usuario invalida (1)"));
     }
 }

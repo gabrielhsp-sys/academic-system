@@ -54,6 +54,10 @@ public class TxtUserRepository implements UserRepository {
             }
         } catch (IOException e) {
             throw new PersistenceOperationException("Falha ao carregar o arquivo de usuarios: " + file, e);
+        } catch (PersistenceOperationException e) {
+            throw new PersistenceOperationException(
+                    "Falha ao carregar o arquivo de usuarios: " + file + ". " + e.getMessage(),
+                    e);
         }
     }
 
