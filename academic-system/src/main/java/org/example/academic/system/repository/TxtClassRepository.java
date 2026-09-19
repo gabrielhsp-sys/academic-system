@@ -6,6 +6,7 @@ import org.example.academic.system.model.Assessment;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -15,7 +16,7 @@ public class TxtClassRepository implements ClassRepository {
 
     @Override
     public void save(List<AcademicClass> classes, Path target) {
-        try (BufferedWriter writer = Files.newBufferedWriter(target)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(target, StandardCharsets.UTF_8)) {
             for (AcademicClass academicClass : classes) {
                 writer.write("TURMA;" + academicClass.getCode() + ";" + academicClass.getTitle());
                 writer.newLine();
