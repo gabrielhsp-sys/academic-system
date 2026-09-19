@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -33,11 +34,24 @@ class PersistenceRepositoriesTest {
         new TxtClassRepository().save(sampleData(), file);
 
         assertTrue(Files.exists(file));
-        String content = Files.readString(file);
+        String content = Files.readString(file, StandardCharsets.UTF_8);
         assertTrue(content.contains("CC101"));
         assertTrue(content.contains("Orientacao a Objetos"));
         assertTrue(content.contains("EXAM"));
         assertTrue(content.contains("0.4"));
+    }
+
+    @Test
+    void txtRepositoryUsesUtf8() throws IOException {
+        Path file = tempDir.resolve("academic-data-utf8.txt");
+        AcademicClass academicClass = new AcademicClass("CC102", "Programação Orientada a Objetos");
+        academicClass.addAssessment(new Exam("Avaliação prática", 10.0, 1.0));
+
+        new TxtClassRepository().save(List.of(academicClass), file);
+
+        String content = Files.readString(file, StandardCharsets.UTF_8);
+        assertTrue(content.contains("Programação Orientada a Objetos"));
+        assertTrue(content.contains("Avaliação prática"));
     }
 
     @Test
