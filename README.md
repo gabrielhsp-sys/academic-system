@@ -12,6 +12,25 @@ Academic System is a Java application developed as a semester assignment for the
 
 The system supports academic class and assessment management while incrementally exercising object-oriented programming, software engineering, testing, logging, security, persistence, containerization, GUI development, and CI/CD practices.
 
+## About This Fork
+
+This repository is a fork of
+[`pagliares/academic-system-semester-assignment-2026`](https://github.com/pagliares/academic-system-semester-assignment-2026),
+the starter repository for the course. Working on a fork of it was the format required for the
+assignment, so the fork relationship is intentional and is kept on purpose.
+
+The starter provided a Maven skeleton: `pom.xml`, `.gitignore`, `LICENSE`, a README stub and a
+placeholder `Main` class — ten files in total.
+
+Everything else in this repository was written by Gabriel Henrique: 59 application classes,
+14 test classes, the `Dockerfile`, and the four GitHub Actions workflows (CI, PR validation,
+Docker publish and release), plus changes to `pom.xml` and `.gitignore`. That is 88 files and
+about 3,700 lines added across 13 commits on top of the starter.
+
+The domain model, the layered architecture, the RBAC security model, the persistence
+implementations (TXT, JSON, XML), the report generators, the JavaFX interface and the test suite
+described below are all part of that work.
+
 ---
 
 <a id="table-of-contents"></a>
@@ -280,7 +299,7 @@ The project follows the standard Maven directory layout, separating production c
 ### Clone Repository
 
 ```bash
-git clone https://github.com/pagliares/academic-system.git
+git clone https://github.com/gabrielhsp-sys/academic-system.git
 cd academic-system
 ```
 
