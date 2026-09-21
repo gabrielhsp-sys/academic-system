@@ -29,7 +29,7 @@ jobs:
         working-directory: academic-system
 
       - name: Publicar release no GitHub
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
         with:
           files: academic-system/target/AcademicSystem-1.0-SNAPSHOT.jar
           generate_release_notes: true
